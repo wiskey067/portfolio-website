@@ -33,9 +33,12 @@ export function ProtectedButton({
     }
   }
 
-  const handlePinSuccess = () => {
+  const handlePinDialogClose = () => {
     setShowPinDialog(false)
-    onClick()
+    // Check if authentication was successful and execute the onClick
+    if (isAuthenticated) {
+      onClick()
+    }
   }
 
   return (
@@ -43,7 +46,7 @@ export function ProtectedButton({
       <Button onClick={handleClick} variant={variant} size={size} className={className}>
         {children}
       </Button>
-      <PinDialog isOpen={showPinDialog} onClose={() => setShowPinDialog(false)} />
+      <PinDialog isOpen={showPinDialog} onClose={handlePinDialogClose} />
     </>
   )
 }

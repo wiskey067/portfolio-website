@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { usePersistentState } from "@/hooks/use-persistent-state"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -10,7 +11,7 @@ import { ProtectedButton } from "./protected-button"
 
 export function AboutSection() {
   const [isEditing, setIsEditing] = useState(false)
-  const [aboutData, setAboutData] = useState({
+  const [aboutData, setAboutData] = usePersistentState("portfolio-about", {
     title: "About Me",
     description: `I'm a passionate Full Stack Developer with expertise in modern web technologies. 
     Currently pursuing B.Tech in Computer Science at KIIT University, I have hands-on experience 
@@ -22,8 +23,7 @@ export function AboutSection() {
 
   const handleSave = () => {
     setIsEditing(false)
-    // Here you would typically save to a database
-    console.log("Saving about data:", aboutData)
+    console.log("About data saved to localStorage")
   }
 
   return (

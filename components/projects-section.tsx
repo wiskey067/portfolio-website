@@ -1,12 +1,14 @@
 "use client"
 
 import { useState } from "react"
+import { usePersistentState } from "@/hooks/use-persistent-state"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Edit, Trash2, Github, ExternalLink, Save, X, Search } from "lucide-react"
+import { ProtectedButton } from "./protected-button"
 
 interface Project {
   id: string
@@ -19,7 +21,7 @@ interface Project {
 }
 
 export function ProjectsSection() {
-  const [projects, setProjects] = useState<Project[]>([
+  const [projects, setProjects] = usePersistentState<Project[]>("portfolio-projects", [
     {
       id: "1",
       title: "Customer Segmentation using RFM Analysis",
@@ -110,13 +112,13 @@ export function ProjectsSection() {
                 className="pl-10 w-64"
               />
             </div>
-            <Button
+            <ProtectedButton
               onClick={() => setIsAdding(true)}
               className="bg-primary text-primary-foreground hover:bg-primary/90 glow-effect"
             >
               <Plus className="mr-2 h-4 w-4" />
               Add Project
-            </Button>
+            </ProtectedButton>
           </div>
         </div>
 
@@ -161,10 +163,10 @@ export function ProjectsSection() {
                   />
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={addProject} className="bg-primary text-primary-foreground">
+                  <ProtectedButton onClick={addProject} className="bg-primary text-primary-foreground">
                     <Save className="mr-2 h-4 w-4" />
                     Save Project
-                  </Button>
+                  </ProtectedButton>
                   <Button onClick={() => setIsAdding(false)} variant="outline">
                     <X className="mr-2 h-4 w-4" />
                     Cancel
@@ -221,12 +223,12 @@ export function ProjectsSection() {
                         )}
                       </div>
                       <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button size="sm" variant="outline" onClick={() => setEditingId(project.id)}>
+                        <ProtectedButton size="sm" variant="outline" onClick={() => setEditingId(project.id)}>
                           <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button size="sm" variant="destructive" onClick={() => deleteProject(project.id)}>
+                        </ProtectedButton>
+                        <ProtectedButton size="sm" variant="destructive" onClick={() => deleteProject(project.id)}>
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </ProtectedButton>
                       </div>
                     </div>
                   </>
@@ -292,9 +294,9 @@ function ProjectEditForm({
         />
       </div>
       <div className="flex gap-2">
-        <Button onClick={() => onSave(editData)} size="sm" className="bg-primary text-primary-foreground">
+        <ProtectedButton onClick={() => onSave(editData)} size="sm" className="bg-primary text-primary-foreground">
           <Save className="h-4 w-4" />
-        </Button>
+        </ProtectedButton>
         <Button onClick={onCancel} variant="outline" size="sm">
           <X className="h-4 w-4" />
         </Button>

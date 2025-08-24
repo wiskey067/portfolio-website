@@ -1,11 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { usePersistentState } from "@/hooks/use-persistent-state"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Plus, Edit, Trash2, Save, X, Calendar, MapPin } from "lucide-react"
+import { ProtectedButton } from "./protected-button"
 
 interface Experience {
   id: string
@@ -17,7 +19,7 @@ interface Experience {
 }
 
 export function ExperienceSection() {
-  const [experiences, setExperiences] = useState<Experience[]>([
+  const [experiences, setExperiences] = usePersistentState<Experience[]>("portfolio-experiences", [
     {
       id: "1",
       role: "Growth Executive (Marketing Operations Analyst)",
@@ -86,13 +88,13 @@ export function ExperienceSection() {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-12">
           <h2 className="text-4xl font-bold text-primary font-sans">Experience</h2>
-          <Button
+          <ProtectedButton
             onClick={() => setIsAdding(true)}
             className="bg-primary text-primary-foreground hover:bg-primary/90 glow-effect"
           >
             <Plus className="mr-2 h-4 w-4" />
             Add Experience
-          </Button>
+          </ProtectedButton>
         </div>
 
         {isAdding && (
@@ -145,12 +147,16 @@ export function ExperienceSection() {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <Button size="sm" variant="outline" onClick={() => setEditingId(experience.id)}>
+                        <ProtectedButton size="sm" variant="outline" onClick={() => setEditingId(experience.id)}>
                           <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button size="sm" variant="destructive" onClick={() => deleteExperience(experience.id)}>
+                        </ProtectedButton>
+                        <ProtectedButton
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => deleteExperience(experience.id)}
+                        >
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </ProtectedButton>
                       </div>
                     </div>
                   </>
@@ -258,10 +264,10 @@ function ExperienceForm({
       </div>
 
       <div className="flex gap-2">
-        <Button onClick={onSave} className="bg-primary text-primary-foreground">
+        <ProtectedButton onClick={onSave} className="bg-primary text-primary-foreground">
           <Save className="mr-2 h-4 w-4" />
           {isNew ? "Add Experience" : "Save Changes"}
-        </Button>
+        </ProtectedButton>
         <Button onClick={onCancel} variant="outline">
           <X className="mr-2 h-4 w-4" />
           Cancel

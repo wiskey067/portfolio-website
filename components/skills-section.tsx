@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { usePersistentState } from "@/hooks/use-persistent-state"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -15,7 +16,7 @@ interface Skill {
 }
 
 export function SkillsSection() {
-  const [skills, setSkills] = useState<Skill[]>([
+  const [skills, setSkills] = usePersistentState<Skill[]>("portfolio-skills", [
     { id: "1", name: "Python", category: "Languages" },
     { id: "2", name: "JavaScript", category: "Languages" },
     { id: "3", name: "TypeScript", category: "Languages" },

@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Download, Upload, Plus, Trash2, FileText } from "lucide-react"
+import { ProtectedButton } from "./protected-button"
 
 interface Resume {
   id: string
@@ -61,14 +62,14 @@ export function ResumeSection() {
         <div className="flex justify-between items-center mb-12">
           <h2 className="text-4xl font-bold text-primary font-sans">Resume</h2>
           <div className="flex gap-4">
-            <Button
+            <ProtectedButton
               onClick={() => setIsUploading(true)}
               variant="outline"
               className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
             >
               <Plus className="mr-2 h-4 w-4" />
               Add Resume
-            </Button>
+            </ProtectedButton>
           </div>
         </div>
 
@@ -102,9 +103,9 @@ export function ResumeSection() {
                         >
                           <Download className="h-4 w-4" />
                         </Button>
-                        <Button onClick={() => deleteResume(resume.id)} size="sm" variant="destructive">
+                        <ProtectedButton onClick={() => deleteResume(resume.id)} size="sm" variant="destructive">
                           <Trash2 className="h-4 w-4" />
-                        </Button>
+                        </ProtectedButton>
                       </div>
                     </div>
                   ))}
